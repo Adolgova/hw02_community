@@ -15,7 +15,7 @@ Including another URLconf
 """
 
 # yatube/urls.py
-from argparse import Namespace
+# from argparse import Namespace
 from django.contrib import admin
 from django.urls import include, path
 
