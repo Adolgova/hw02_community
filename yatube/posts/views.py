@@ -1,8 +1,8 @@
 
 # Create your views here.
-from cgitb import text
-from turtle import title
-from typing import Text
+# from cgitb import text
+# from turtle import title
+# from typing import Text
 from django.shortcuts import render, get_object_or_404
 from .models import Post, Group
 
