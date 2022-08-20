@@ -2,7 +2,7 @@
 
 {% block content %} 
   <h1>Это главная страница проекта Yatube</h1>   
-  {% for post in posts %}
+  {% for post in page_obj %}
     <article>
       <ul>
         <li>
@@ -20,6 +20,7 @@
     {% if not forloop.last %}
       <hr>
     {% endif %}                  
-  {% endfor %}                   
+  {% endfor %}  
+  {% include 'posts/includes/paginator.html' %}                  
 {% endblock %}
  
