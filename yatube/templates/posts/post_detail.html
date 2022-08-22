@@ -1,38 +1,27 @@
-{% extends 'base.html' %}
-{% load static %}
-
-{% block title %}Пост {{ post.text|truncatechars:30 }}{% endblock %}
-
-{% block content %} 
-    <main>
-      <div class="row">
-        <aside class="col-12 col-md-3">
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-              Дата публикации: {{ post.pub_date|date:"d E Y" }} 
-            </li>
-            {% if post.group %} 
-            <li class="list-group-item">
-              Группа: {{ post.group.tittle }}
-              <a 
-              </a>
-            </li>
-            <li class="list-group-item">
-              Автор: {{ post.author.get_full_name }}
-            </li>
-            <li class="list-group-item d-flex justify-content-between align-items-center">
-              Всего постов автора:  <span >{{ post.author.post.count }}</span>
-            </li>
-            <li class="list-group-item">
-              <a href=<a href="{% url 'posts:profile' post.author.usernamre %}">
-                все посты пользователя
-              </a>
-            </li>
-          </ul>
-        </aside>
-        <article class="col-12 col-md-9">
-          <p> {{ post.text }} </p>
-        </article>
-      </div> 
-    </main>
+{% extends "base.html" %}
+{% block title %}{{ post.text|truncatechars:30 }}
+{% endblock %}
+{% block content %}
+  <section>
+    <ul>
+      <li> Дата публикации: {{ post.pub_date|date:"d E Y" }}</li>
+      {% if post.group %} 
+      <li> Группа: {{ post.group.title }} </li>
+      <li> <a href="{% url 'posts:group_list' post.group.slug %}">
+           все записи группы
+        </a><li>
+          {% endif %} 
+          <li> Автор: {{ post.author.username }}</li>
+          <li> Всего постов автора:  <span>{{ post.author.posts.count }}</span></li>
+          <li><a href="{% url 'posts:profile' post.author %}">
+              Все посты пользователя
+            </a>
+          </li>
+    </ul>
+  </section>
+  <article>
+    <p>
+      {{ post.text }}
+    </p>
+  </article>
 {% endblock %}

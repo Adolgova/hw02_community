@@ -8,9 +8,9 @@ app_name = 'users'
 urlpatterns = [
     path('signup/', views.SignUp.as_view(), name='signup'),
     path(
-        'logout/',
+        'logged_out/',
         LogoutView.as_view(template_name='users/logged_out.html'),
-        name='logout'
+        name='logged_out'
     ),
     path(
         'login/',
