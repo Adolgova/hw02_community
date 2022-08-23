@@ -11,13 +11,13 @@
           <li>
               Дата публикации: {{ post.pub_date|date:"d E Y" }}</li>
           {% if post.group %}
-          <li> Группа: {{ post.group.title }}<li>
-          <li><a href="{% url 'posts:group_list' post.group.slug %}"
-            все записи группы
-          </a></li>
+          <li> Группа: {{ post.group.title }}</li>
+          <li><a href="{% url 'posts:group_list' post.group.slug %}">
+          Все записи группы
+          </li>
           {% endif %}    
           <li><a href="{% url 'posts:post_detail' post.id %}">
-            страница поста
+          Страница поста
           </li>
         </ul>
       </section>

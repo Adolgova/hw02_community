@@ -1,6 +1,10 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from posts.models import Post, Group, User
 from django.core.paginator import Paginator
+from django.views.generic.edit import CreateView
+from .forms import PostForm
+from django.contrib.auth.decorators import login_required
+
 
 POSTS_PER_PAGE = 10
 
@@ -52,3 +56,35 @@ def post_detail(request, post_id):
         'post': post,
     }
     return render(request, 'posts/post_detail.html', context)
+
+
+@login_required
+def post_create(request):
+    if request.method == 'POST':
+        form = PostForm(request.POST)
+        if form.is_valid():
+            user = request.user
+            form.instance.author = user
+            form.save()
+            return redirect('posts:profile', username=user.username)
+        return render(request, 'posts/post_create.html', {'form': form})
+    form = PostForm()
+    return render(request, 'posts/post_create.html', {'form': form})
+
+
+@login_required
+def post_edit(request, post_id):
+    post = get_object_or_404(Post, id=post_id)
+    form = PostForm(instance=post)
+    if request.user.id != post.author:
+        return redirect('posts:post_detail', post_id=post_id)
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        user = form.author
+        return redirect('posts:profile', username=user.username)
+    return render(request,
+                  'posts/post_create.html',
+                  {
+                      'form': form,
+                      'is_edit': True
+                  })
